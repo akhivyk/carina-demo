@@ -42,6 +42,12 @@ jobs:
           echo "Repository: ${{ github.repository }}"
           echo "SHA: ${{ github.sha }}"
 
+      - name: Verify Maven environment
+        run: mvn --version
+
+      - name: List files in the repository
+        run: ls -R
+
       - name: Run WEB tests
         run: |
           mvn clean test -Dsuite=web -Dbrowser=chrome -Dselenium_url=http://localhost:4444/wd/hub
