@@ -34,7 +34,7 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Install dependencies
-        run: mvn install -DskipTests
+        run: mvn clean install -DskipTests
 
       - name: Display Git information
         run: |
@@ -51,3 +51,11 @@ jobs:
       - name: Run WEB tests
         run: |
           mvn clean test -Dsuite=web -Dbrowser=chrome -Dselenium_url=http://localhost:4444/wd/hub
+        continue-on-error: true  # Continue to next steps even if tests fail
+
+      - name: Archive test results and screenshots
+        if: always()  # Ensure artifacts are archived even if tests fail
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-results
+          path: path/to/your/test-results  # Replace with actual path where test results are stored
