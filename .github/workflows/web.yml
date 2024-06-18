@@ -41,7 +41,7 @@ jobs:
           sudo chmod +x /usr/local/bin/chromedriver
 
       - name: Install dependencies
-        run: mvn install -DskipTests
+        run: mvn clean install -DskipTests
 
       - name: Display Git information
         run: |
@@ -50,4 +50,4 @@ jobs:
           echo "SHA: ${{ github.sha }}"
 
       - name: Run Web tests with ChromeDriver
-        run: mvn clean test -Dsuite=web -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -Dselenium_url=http://localhost:4444/wd/hub -Dbrowser=chrome
+        run: mvn test -Dsuite=web -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -Dselenium_url=http://selenium:4444/wd/hub -Dbrowser=chrome
