@@ -43,11 +43,5 @@ jobs:
           echo "SHA: ${{ github.sha }}"
 
       - name: Run WEB tests
-        run: mvn clean test -Dsuite=web -Dbrowser=chrome -Dselenium_url=http://localhost:4444/wd/hub
-
-      # Additional debugging steps if needed
-      - name: Collect ChromeDriver logs
-        if: failure()
         run: |
-          docker logs selenium > chromedriver.log
-          cat chromedriver.log
+          mvn clean test -Dsuite=web -Dbrowser=chrome -Dselenium_url=http://localhost:4444/wd/hub
