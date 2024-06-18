@@ -58,4 +58,4 @@ jobs:
           echo "SHA: ${{ github.sha }}"
 
       - name: Run Web tests with ChromeDriver
-        run: mvn clean test -Dsuite=web -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -Dselenium_url=http://selenium:4444/wd/hub
+        run: mvn clean test -Dsuite=web -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -Dselenium_url=http://selenium:4444/wd/hub -Dbrowser=chrome
