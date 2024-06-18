@@ -52,7 +52,7 @@ jobs:
 
       - name: Run WEB tests
         run: |
-          mvn clean test -Dsuite=web -Dbrowser=chrome -Dselenium_url=http://localhost:4444/wd/hub
+          mvn clean test -Dsuite=web -Dbrowser=chrome -Dselenium_url=http://selenium:4444/wd/hub
         continue-on-error: true  # Continue to next steps even if tests fail
 
       - name: Archive test results and screenshots
