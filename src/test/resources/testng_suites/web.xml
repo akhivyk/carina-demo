@@ -13,9 +13,10 @@
 	<parameter name="jenkinsJobExecutionOrder" value="1"/>
 	<parameter name="jenkinsJobExecutionMode" value="continue"/>
 	<parameter name="jenkinsAutoScreenshot" value="true"/>
-	<parameter name="selenium_url" value="http://selenium:4444/wd/hub"/>
 
 	<test name="GSM arena web tests">
+		<parameter name="browser" value="chrome"/>
+		<parameter name="selenium_url" value="http://selenium:4444/wd/hub"/>
 		<classes>
 			<class name="com.zebrunner.carina.demo.WebSampleTest" />
 		</classes>
