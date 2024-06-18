@@ -45,4 +45,4 @@ jobs:
           echo "SHA: ${{ github.sha }}"
 
       - name: Run API tests
-        run: mvn clean test -Dsuite=web
+        run: mvn clean test -Dsuite=api
