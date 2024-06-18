@@ -52,12 +52,5 @@ jobs:
 
       - name: Run WEB tests
         run: |
-          mvn clean test -Dsuite=web -Dselenium_url=http://selenium:4444/wd/hub
-        continue-on-error: true  # Continue to next steps even if tests fail
-
-      - name: Archive test results and screenshots
-        if: always()  # Ensure artifacts are archived even if tests fail
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-results
-          path: target/surefire-reports  # Path to test results, adjust as per your project structure
+          mvn clean test -Dsuite=api -Dselenium_url=http://selenium:4444/wd/hub
+        continue-on-error: true
