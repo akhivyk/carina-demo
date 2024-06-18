@@ -1,4 +1,4 @@
-name: WEB Tests
+name: Web Tests
 
 on:
   pull_request:
@@ -33,10 +33,23 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Install dependencies
+      - name: Install Chrome
         run: |
-          mvn clean install --file pom.xml
-          mvn test-compile
+          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+          sudo apt-get update
+          sudo apt-get install google-chrome-stable
+
+      - name: Install ChromeDriver
+        run: |
+          LATEST_CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
+          wget -q -O /tmp/chromedriver.zip https://chromedriver.storage.googleapis.com/${LATEST_CHROMEDRIVER_VERSION}/chromedriver_linux64.zip
+          unzip /tmp/chromedriver.zip -d /tmp
+          sudo mv /tmp/chromedriver /usr/local/bin/chromedriver
+          sudo chmod +x /usr/local/bin/chromedriver
+
+      - name: Install dependencies
+        run: mvn install -DskipTests
 
       - name: Display Git information
         run: |
@@ -44,13 +57,5 @@ jobs:
           echo "Repository: ${{ github.repository }}"
           echo "SHA: ${{ github.sha }}"
 
-      - name: Verify Maven environment
-        run: mvn --version
-
-      - name: List files in the repository
-        run: ls -R
-
-      - name: Run WEB tests
-        run: |
-          mvn clean test -Dsuite=api -Dselenium_url=http://selenium:4444/wd/hub
-        continue-on-error: true
+      - name: Run Web tests with ChromeDriver
+        run: mvn clean test -Dsuite=web -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -Dselenium_url=http://selenium:4444/wd/hub
