@@ -34,7 +34,9 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Install dependencies
-        run: mvn clean install -DskipTests
+        run: |
+          mvn clean install --file pom.xml
+          mvn test-compile
 
       - name: Display Git information
         run: |
@@ -58,4 +60,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: test-results
-          path: path/to/your/test-results  # Replace with actual path where test results are stored
+          path: target/surefire-reports  # Path to test results, adjust as per your project structure
